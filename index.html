@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sondr Studio — Athletic Reformer Pilates · Nairobi</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --burg:   #4A1E28;
+  --burg-d: #2E1018;
+  --burg-m: #6A2838;
+  --rose:   #B8887A;
+  --blush:  #C9A090;
+  --pink:   #DEC0B0;
+  --petal:  #EDD5C5;
+  --linen:  #F5EAE4;
+  --cream:  #FAF3EE;
+  --white:  #FDFAF8;
+  --ink:    #1A1614;
+  --muted:  #8A7870;
+  --hr:     rgba(92,35,48,0.12);
+  --sand:   #E8DDD5;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--white);color:var(--ink);
+  font-family:'Jost',sans-serif;font-weight:300;
+  overflow-x:hidden;padding-top:42px;}
+section{user-select:none;}a{text-decoration:none;}
+img{display:block;max-width:100%;object-fit:cover;}
+
+/* ── WATERMARK ── */
+.wm{position:fixed;inset:0;z-index:8999;pointer-events:none;overflow:hidden;}
+.wm-t{position:absolute;width:280vw;height:280vh;top:-90vh;left:-90vw;
+  transform:rotate(-28deg);display:flex;flex-direction:column;}
+.wm-r{display:flex;white-space:nowrap;padding:20px 0;}
+.wm-r span{font-family:'Cormorant Garamond',serif;font-size:10px;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(92,35,48,.07);padding:0 36px;}
+
+/* ── LOCK BANNER ── */
+.lb{position:fixed;top:0;left:0;right:0;z-index:9100;height:42px;
+  background:var(--burg-d);
+  display:flex;align-items:center;justify-content:center;
+  gap:1.2rem;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(232,196,184,.45);border-bottom:1px solid rgba(92,35,48,.2);}
+.lb strong{color:var(--pink);}
+.lb a{color:var(--petal);border-bottom:1px solid rgba(232,196,184,.25);transition:color .2s;}
+.lb a:hover{color:var(--white);}
+.lb-s{opacity:.2;}
+
+/* ── WHATSAPP FAB ── */
+.wa{position:fixed;bottom:28px;right:28px;z-index:9000;
+  width:56px;height:56px;border-radius:50%;
+  background:#25D366;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(37,211,102,.4);transition:transform .3s,box-shadow .3s;}
+.wa:hover{transform:translateY(-4px) scale(1.06);box-shadow:0 8px 28px rgba(37,211,102,.5);}
+.wa svg{width:28px;height:28px;fill:white;}
+.wa-tip{position:absolute;right:64px;background:var(--burg-d);color:var(--petal);
+  font-size:.68rem;white-space:nowrap;padding:.32rem .85rem;border-radius:20px;
+  opacity:0;transition:opacity .2s;pointer-events:none;}
+.wa:hover .wa-tip{opacity:1;}
+
+/* ── NAV ── */
+nav{position:fixed;top:42px;left:0;right:0;z-index:800;height:64px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 5vw;
+  background:rgba(253,250,248,.97);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--hr);}
+.nav-logo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.3rem;font-weight:300;letter-spacing:.25em;
+  color:var(--ink);text-transform:lowercase;}
+.nav-logo em{font-style:normal;color:var(--burg);}
+.nav-links{display:flex;gap:2.5rem;list-style:none;}
+.nav-links a{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--muted);transition:color .2s;}
+.nav-links a:hover{color:var(--burg);}
+.nav-book{
+  font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--burg-d);background:#C9A090;
+  padding:.6rem 1.6rem;border-radius:0;
+  font-weight:400;border:1px solid #C9A090;transition:all .25s;}
+.nav-book:hover{background:transparent;color:var(--burg);}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;
+  display:grid;grid-template-columns:1fr 1fr;
+  padding-top:64px;
+  background:var(--cream);
+}
+
+/* HERO LEFT — editorial text */
+.hero-l{
+  padding:10vh 6vw;
+  display:flex;flex-direction:column;justify-content:center;
+  position:relative;
+  background:#EDD5C5;
+}
+.hero-l::after{
+  content:'';position:absolute;right:0;top:8%;bottom:8%;
+  width:1px;background:linear-gradient(to bottom,transparent,var(--hr),transparent);}
+
+.h-eye{font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;
+  color:#8A5A50;display:flex;align-items:center;gap:.8rem;
+  margin-bottom:2.5rem;
+  opacity:0;animation:ri .9s ease .2s forwards;}
+.h-eye::before{content:'';width:20px;height:.5px;background:#C9A090;}
+
+.h-h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(3.5rem,6vw,6.5rem);
+  font-weight:200;line-height:.98;
+  color:var(--ink);letter-spacing:-.01em;
+  opacity:0;animation:ri .9s ease .4s forwards;
+}
+.h-h1 em{font-style:italic;color:var(--burg);font-weight:300;}
+.h-h1 span{display:block;}
+
+.h-sub{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem;font-style:italic;font-weight:300;
+  color:#A87868;letter-spacing:.04em;
+  margin:1.4rem 0 2.5rem;
+  opacity:0;animation:ri .9s ease .58s forwards;
+}
+
+.h-acts{display:flex;gap:.8rem;align-items:center;flex-wrap:wrap;
+  opacity:0;animation:ri .9s ease .72s forwards;}
+
+.btn-burg{
+  background:var(--burg);color:var(--white);
+  font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;
+  padding:.95rem 2.2rem;border:1px solid var(--burg);
+  font-weight:400;transition:all .25s;display:inline-block;}
+.btn-burg:hover{background:transparent;color:var(--burg);}
+.btn-out{
+  color:var(--burg);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;
+  border-bottom:1px solid var(--pink);padding-bottom:2px;transition:all .2s;}
+.btn-out:hover{border-color:var(--burg);}
+
+.h-stats{
+  display:flex;gap:3rem;margin-top:5rem;
+  padding-top:2.2rem;border-top:1px solid var(--hr);
+  opacity:0;animation:ri .9s ease 1s forwards;}
+.hs-n{font-family:'Cormorant Garamond',serif;
+  font-size:2.2rem;font-weight:300;color:#8A4A3A;line-height:1;}
+.hs-l{font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--muted);margin-top:.3rem;}
+
+/* HERO RIGHT — photo panel */
+.hero-r{
+  position:relative;overflow:hidden;
+  display:grid;grid-template-rows:65% 35%;
+  gap:2px;background:var(--ink);}
+.hp{overflow:hidden;position:relative;}
+.hp img{width:100%;height:100%;object-fit:cover;
+  filter:grayscale(100%) contrast(1.05);
+  transition:transform 6s ease,filter .5s;}
+.hp:hover img{transform:scale(1.04);filter:grayscale(80%);}
+/* rose tint overlay on hover */
+.hp::after{
+  content:'';position:absolute;inset:0;
+  background:rgba(92,35,48,0);transition:background .5s;}
+.hp:hover::after{background:rgba(92,35,48,.08);}
+/* bottom photo: split 2 */
+.hero-r-bot{display:grid;grid-template-columns:1fr 1fr;gap:2px;}
+.hp-sm{overflow:hidden;position:relative;}
+.hp-sm img{width:100%;height:100%;object-fit:cover;
+  filter:grayscale(100%);transition:transform 6s ease;}
+.hp-sm:hover img{transform:scale(1.06);filter:grayscale(70%);}
+/* Sondr label on one small panel */
+.hp-label{
+  position:absolute;inset:0;
+  background:var(--burg);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:1.5rem;
+}
+.hp-label .big{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.5rem;font-weight:200;letter-spacing:.3em;
+  color:var(--white);line-height:1;}
+.hp-label .sm{font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;
+  color:rgba(255,255,255,.5);margin-top:.6rem;}
+
+/* Ghost editorial text behind hero */
+.hero-ghost{
+  position:absolute;bottom:2rem;left:6vw;
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(6rem,14vw,16rem);
+  font-weight:200;letter-spacing:-.03em;
+  color:rgba(180,130,110,.06);
+  line-height:1;pointer-events:none;
+  opacity:0;animation:fi 1.5s ease 1.2s forwards;
+}
+
+@keyframes ri{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+
+/* ── TICKER ── */
+.ticker{height:42px;background:#C9A090;overflow:hidden;display:flex;align-items:center;}
+.t-tr{display:flex;white-space:nowrap;animation:tick 24s linear infinite;}
+.t-it{font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;
+  color:rgba(50,20,15,.75);padding:0 2.5rem;
+  display:flex;align-items:center;gap:2rem;}
+.t-it::after{content:'·';color:rgba(50,20,15,.3);font-size:.9rem;}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── SHARED ── */
+.eye{font-size:.55rem;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--burg);display:flex;align-items:center;gap:.7rem;margin-bottom:.9rem;}
+.eye::before{content:'';width:18px;height:.5px;background:var(--burg);}
+.st{font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2rem,3vw,3.2rem);font-weight:300;
+  line-height:1.12;color:var(--ink);}
+.st em{font-style:italic;color:var(--burg);}
+.st--w{color:var(--white);}
+.st--w em{color:var(--pink);}
+.sb{font-size:.8rem;font-weight:300;color:var(--muted);line-height:1.95;margin:.7rem 0;}
+
+/* ── BRAND STATEMENT ── */
+.brand-s{
+  background:#2E1018;
+  padding:7rem 12vw;text-align:center;}
+.brand-s blockquote{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.5rem,3vw,2.8rem);
+  font-weight:200;font-style:italic;
+  color:var(--petal);line-height:1.55;
+  max-width:820px;margin:0 auto;}
+.brand-s cite{
+  display:block;margin-top:2rem;font-style:normal;
+  font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;
+  color:rgba(232,196,184,.4);}
+.brand-pills{
+  display:flex;justify-content:center;gap:4.5rem;flex-wrap:wrap;
+  margin-top:4rem;padding-top:3rem;
+  border-top:1px solid rgba(232,196,184,.08);}
+.bp{text-align:center;}
+.bp-ico{font-size:1.1rem;margin-bottom:.5rem;}
+.bp-lbl{font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;
+  color:rgba(232,196,184,.45);}
+
+/* ── ABOUT SPLIT ── */
+.about{display:grid;grid-template-columns:1fr 1fr;}
+.about-img{position:relative;overflow:hidden;min-height:560px;}
+.about-img img{width:100%;height:100%;filter:grayscale(100%) contrast(1.05);}
+.about-img-ov{
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(92,35,48,.2) 0%,transparent 60%);}
+.about-badge{
+  position:absolute;bottom:2.5rem;right:2.5rem;
+  background:var(--burg);padding:1.4rem 2rem;}
+.about-badge .big{font-family:'Cormorant Garamond',serif;
+  font-size:1.8rem;font-weight:300;color:var(--white);line-height:1;}
+.about-badge .sm{font-size:.54rem;letter-spacing:.22em;text-transform:uppercase;
+  color:rgba(255,255,255,.55);margin-top:.3rem;}
+.about-tx{background:#F5EAE4;padding:7rem 5vw;
+  display:flex;flex-direction:column;justify-content:center;}
+.pillars{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2.5rem;}
+.pillar{background:var(--white);padding:1.2rem 1.4rem;
+  border-left:2px solid var(--burg);}
+.pillar h4{font-size:.74rem;font-weight:500;color:var(--ink);margin-bottom:.25rem;}
+.pillar p{font-size:.68rem;color:var(--muted);font-weight:300;}
+
+/* ── CLASSES ── */
+.classes{background:var(--white);padding:7rem 5vw;}
+.cls-hd{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:end;margin-bottom:4rem;}
+.cls-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;background:var(--hr);}
+.cls-card{background:var(--white);padding:0 0 2.5rem;transition:background .3s;position:relative;}
+.cls-card:hover{background:var(--cream);}
+.cls-card::after{content:'';position:absolute;bottom:0;left:0;
+  width:0;height:1.5px;background:var(--burg);transition:width .5s;}
+.cls-card:hover::after{width:100%;}
+.cls-img{width:100%;height:240px;object-fit:cover;
+  filter:grayscale(100%) contrast(1.05);
+  transition:filter .4s,transform .5s;margin-bottom:1.8rem;}
+.cls-card:hover .cls-img{filter:grayscale(60%);transform:scale(1.02);}
+.cls-inner{padding:0 2rem;}
+.cls-tag{font-size:.54rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--rose);margin-bottom:.8rem;}
+.cls-card h3{font-family:'Cormorant Garamond',serif;
+  font-size:1.2rem;font-weight:400;color:var(--ink);margin-bottom:.6rem;}
+.cls-card p{font-size:.75rem;font-weight:300;color:var(--muted);line-height:1.8;}
+.cls-card .level{
+  display:inline-block;margin-top:.8rem;
+  font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--burg);border:1px solid var(--pink);
+  padding:.25rem .7rem;}
+
+/* ── FOUNDATION 4 ── */
+.foundation{
+  background:var(--burg);
+  display:grid;grid-template-columns:1fr 1fr;}
+.fnd-txt{padding:7rem 5vw;display:flex;flex-direction:column;justify-content:center;}
+.fnd-txt .eye{color:var(--pink);}
+.fnd-txt .eye::before{background:var(--pink);}
+.fnd-txt .st{color:var(--white);}
+.fnd-txt .st em{color:var(--pink);}
+.fnd-txt .sb{color:rgba(232,196,184,.65);}
+.fnd-steps{margin-top:2.5rem;}
+.fnd-step{display:flex;gap:1.5rem;padding-bottom:1.8rem;margin-bottom:1.8rem;
+  border-bottom:1px solid rgba(232,196,184,.1);}
+.fnd-step:last-child{border:none;margin:0;padding:0;}
+.fnd-n{font-family:'Cormorant Garamond',serif;
+  font-size:2rem;font-weight:200;color:rgba(232,196,184,.25);
+  line-height:1;flex-shrink:0;width:38px;}
+.fnd-step h4{font-size:.82rem;font-weight:500;color:var(--petal);margin-bottom:.35rem;}
+.fnd-step p{font-size:.74rem;font-weight:300;color:rgba(232,196,184,.55);line-height:1.75;}
+.fnd-img{position:relative;overflow:hidden;min-height:500px;}
+.fnd-img img{width:100%;height:100%;object-fit:cover;filter:grayscale(100%) brightness(.7);}
+
+/* ── EDITORIAL GRID (Instagram-style) ── */
+.editorial{background:var(--cream);padding:7rem 5vw;}
+.ed-grid{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr;
+  grid-template-rows:320px 200px;
+  gap:3px;margin-top:3rem;background:var(--hr);}
+.eg{overflow:hidden;position:relative;cursor:pointer;}
+.eg img{width:100%;height:100%;object-fit:cover;
+  filter:grayscale(100%);transition:transform .5s ease,filter .4s;}
+.eg:hover img{transform:scale(1.06);filter:grayscale(50%);}
+.eg1{grid-column:1/2;grid-row:1/3;}
+.eg2{grid-column:2/3;grid-row:1/2;}
+.eg3{grid-column:3/4;grid-row:1/2;}
+.eg4{grid-column:2/3;grid-row:2/3;background:var(--burg);
+  display:flex;align-items:center;justify-content:center;text-align:center;padding:2rem;}
+.eg4-txt h3{font-family:'Cormorant Garamond',serif;
+  font-size:1.3rem;font-weight:300;font-style:italic;color:var(--white);line-height:1.3;}
+.eg4-txt p{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(255,255,255,.4);margin-top:.5rem;}
+.eg5{grid-column:3/4;grid-row:2/3;}
+.eg-cap{position:absolute;bottom:0;left:0;right:0;
+  background:linear-gradient(to top,rgba(26,22,20,.8),transparent);
+  padding:.8rem 1rem;opacity:0;transition:opacity .3s;}
+.eg:hover .eg-cap{opacity:1;}
+.eg-cap span{font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--petal);}
+
+/* ── PRICING ── */
+.pricing{background:var(--linen);padding:7rem 5vw;}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:4rem;}
+.pc{background:var(--white);padding:2.8rem 2.2rem;border:1px solid var(--hr);
+  transition:transform .3s,box-shadow .3s;position:relative;}
+.pc:hover{transform:translateY(-6px);box-shadow:0 24px 55px rgba(92,35,48,.07);}
+.pc.feat{background:var(--burg-d);}
+.pc-star{position:absolute;top:-1px;left:50%;transform:translateX(-50%);
+  font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;
+  background:var(--burg);color:var(--white);padding:.24rem 1rem;}
+.pc-ico{font-size:1.5rem;margin-bottom:1.3rem;}
+.pc h3{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:400;
+  color:var(--ink);margin-bottom:.3rem;}
+.pc.feat h3{color:var(--cream);}
+.pc-d{font-size:.54rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--rose);margin-bottom:1.5rem;}
+.pc.feat .pc-d{color:rgba(232,196,184,.55);}
+.pc-ul{list-style:none;margin-bottom:1.8rem;}
+.pc-ul li{font-size:.76rem;font-weight:300;color:var(--muted);
+  padding:.4rem 0;border-bottom:1px solid var(--hr);
+  display:flex;align-items:center;gap:.55rem;}
+.pc.feat .pc-ul li{color:rgba(232,196,184,.6);border-color:rgba(232,196,184,.08);}
+.pc-ul li::before{content:'—';font-size:.55rem;color:var(--burg);flex-shrink:0;}
+.pc.feat .pc-ul li::before{color:rgba(232,196,184,.4);}
+.pc-cta{display:block;text-align:center;
+  background:var(--burg);color:var(--white);
+  padding:.8rem;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;
+  transition:all .25s;}
+.pc-cta:hover{background:var(--burg-d);}
+.pc.feat .pc-cta{background:rgba(232,196,184,.15);color:var(--pink);}
+.pc.feat .pc-cta:hover{background:rgba(232,196,184,.25);}
+
+/* ── TESTIMONIALS ── */
+.testimonials{background:var(--ink);padding:7rem 5vw;}
+.testimonials .eye{color:var(--rose);}
+.testimonials .eye::before{background:var(--rose);}
+.t-grid{display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1.5px;margin-top:4rem;background:rgba(92,35,48,.12);}
+.tc{background:var(--ink);padding:3rem 2.4rem;transition:background .3s;}
+.tc:hover{background:#22201E;}
+.tc-stars{font-size:.7rem;letter-spacing:.1em;margin-bottom:1.5rem;color:var(--rose);}
+.tc-q{font-family:'Cormorant Garamond',serif;font-size:3.5rem;
+  line-height:.5;color:rgba(92,35,48,.2);margin-bottom:.7rem;}
+.tc-txt{font-family:'Cormorant Garamond',serif;font-size:.98rem;font-style:italic;
+  font-weight:300;color:rgba(232,196,184,.72);line-height:1.85;margin-bottom:1.8rem;}
+.tc-au{display:flex;align-items:center;gap:.75rem;}
+.tc-av{width:38px;height:38px;border-radius:50%;
+  border:1px solid rgba(92,35,48,.3);
+  background:rgba(92,35,48,.12);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.68rem;color:var(--rose);font-weight:400;flex-shrink:0;}
+.tc-nm{font-size:.76rem;font-weight:400;color:var(--cream);}
+.tc-lc{font-size:.62rem;color:rgba(232,196,184,.3);margin-top:.12rem;}
+
+/* ── CTA ── */
+.cta{background:var(--linen);padding:9rem 5vw;text-align:center;
+  position:relative;overflow:hidden;}
+.cta::before{content:'sondr.';position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  font-family:'Cormorant Garamond',serif;font-size:22vw;font-weight:200;
+  color:rgba(180,130,110,.06);pointer-events:none;white-space:nowrap;letter-spacing:-.02em;}
+.cta .eye{justify-content:center;}
+.cta .eye::before{display:none;}
+.cta h2{font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.5rem,5vw,5rem);font-weight:200;
+  color:var(--ink);line-height:1.05;margin-bottom:1.4rem;}
+.cta h2 em{font-style:italic;color:var(--burg);}
+.cta p{font-size:.8rem;font-weight:300;color:var(--muted);
+  max-width:420px;margin:0 auto 3rem;line-height:1.9;}
+.cta-row{display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap;}
+.cta-info{display:flex;justify-content:center;gap:3.5rem;
+  margin-top:4rem;padding-top:2.5rem;
+  border-top:1px solid var(--hr);flex-wrap:wrap;}
+.ci{text-align:center;}
+.ci-ico{font-size:1.1rem;margin-bottom:.4rem;}
+.ci-lbl{font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:.2rem;}
+.ci-val{font-size:.8rem;color:var(--ink);font-weight:300;}
+
+/* ── FOOTER ── */
+footer{background:var(--burg-d);padding:5.5rem 5vw 2.5rem;}
+.ft-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:4rem;margin-bottom:4rem;}
+.ft-logo{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:200;
+  letter-spacing:.25em;color:var(--pink);margin-bottom:.7rem;}
+.ft-p{font-size:.7rem;font-weight:300;color:rgba(232,196,184,.28);
+  line-height:1.9;max-width:220px;margin-bottom:1.4rem;}
+.ft-soc{display:flex;gap:.5rem;}
+.ft-sc{width:32px;height:32px;border:1px solid rgba(232,196,184,.12);
+  display:flex;align-items:center;justify-content:center;
+  color:rgba(232,196,184,.3);font-size:.6rem;transition:all .2s;}
+.ft-sc:hover{border-color:var(--pink);color:var(--pink);}
+.ft-col h4{font-size:.52rem;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--rose);margin-bottom:1.4rem;}
+.ft-col ul{list-style:none;}
+.ft-col ul li{font-size:.72rem;font-weight:300;color:rgba(232,196,184,.28);
+  margin-bottom:.6rem;cursor:default;transition:color .2s;}
+.ft-col ul li:hover{color:rgba(232,196,184,.6);}
+.ft-bot{border-top:1px solid rgba(232,196,184,.05);padding-top:1.8rem;
+  display:flex;justify-content:space-between;align-items:center;}
+.ft-bot p{font-size:.56rem;color:rgba(232,196,184,.16);}
+.ft-bot-r{font-size:.52rem;letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(232,196,184,.18);}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(16px);transition:opacity .9s ease,transform .9s ease;}
+.rv.sh{opacity:1;transform:translateY(0);}
+
+/* RESPONSIVE */
+@media(max-width:1100px){
+  .hero{grid-template-columns:1fr;}
+  .hero-r{height:380px;grid-template-rows:1fr;}
+  .hero-r-bot{height:38%;}
+  .about{grid-template-columns:1fr;}
+  .about-img{min-height:320px;}
+  .foundation{grid-template-columns:1fr;}
+  .fnd-img{min-height:280px;}
+  .cls-hd{grid-template-columns:1fr;}
+  .cls-grid,.t-grid{grid-template-columns:1fr 1fr;}
+  .pricing-grid{grid-template-columns:1fr;}
+  .ed-grid{grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,200px);}
+  .eg1,.eg2,.eg3,.eg4,.eg5{grid-column:auto;grid-row:auto;}
+  .ft-grid{grid-template-columns:1fr 1fr;gap:2.5rem;}
+  .brand-pills{gap:2.5rem;}
+}
+@media(max-width:680px){
+  .nav-links{display:none;}
+  .hero-l{padding:4rem 5vw 3rem;}
+  .cls-grid,.t-grid{grid-template-columns:1fr;}
+  .ft-grid{grid-template-columns:1fr;}
+  .ft-bot{flex-direction:column;gap:.8rem;text-align:center;}
+  .pillars{grid-template-columns:1fr;}
+  .cta-info{gap:2rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- WATERMARK -->
+<div class="wm" aria-hidden="true" id="wm"></div>
+
+<!-- LOCK BANNER -->
+<div class="lb">
+  <span>🔒</span>
+  <span><strong>Design Proposal</strong> — Confidential Preview</span>
+  <span class="lb-s">|</span>
+  <span>Built by <a href="mailto:josiegacau@gmail.com">Josie Gacau</a></span>
+  <span class="lb-s">|</span>
+  <a href="tel:+254745882043">+254 745 882 043</a>
+  <span class="lb-s">|</span>
+  <span>Not for redistribution</span>
+</div>
+
+<!-- WHATSAPP FAB -->
+<a href="https://wa.me/254745882043" target="_blank" class="wa">
+  <span class="wa-tip">Chat with Josie</span>
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.49"/></svg>
+</a>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo" style="display:flex;align-items:center;gap:.9rem;">
+    <div style="width:36px;height:36px;border-radius:50%;background:#C9A090;display:flex;align-items:center;justify-content:center;">
+      <span style="font-family:'Cormorant Garamond',serif;font-size:.65rem;font-style:italic;font-weight:300;color:rgba(255,255,255,.9);letter-spacing:.04em;">s.</span>
+    </div>
+    <div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:300;letter-spacing:.2em;color:var(--ink);">sondr<span style="color:#C9A090;">.</span></div>
+      <div style="font-size:.5rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);">Studio · Nairobi</div>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#classes">Classes</a></li>
+    <li><a href="#method">Our Method</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#book">Book</a></li>
+  </ul>
+  <a href="#book" class="nav-book">Book a Class</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-l">
+    <div class="hero-ghost">sondr.</div>
+    <div class="h-eye">Athletic Reformer Pilates · Nairobi, Kenya</div>
+    <h1 class="h-h1">
+      <span>Not just</span>
+      <span>another</span>
+      <span><em>class.</em></span>
+    </h1>
+    <div class="h-sub">Combining Pilates with a sense of retreat ✹ ☽</div>
+    <div class="h-acts">
+      <a href="#book" class="btn-burg">Book a Class</a>
+      <a href="#method" class="btn-out">Our Method →</a>
+    </div>
+    <div class="h-stats">
+      <div><div class="hs-n">12K</div><div class="hs-l">Community</div></div>
+      <div><div class="hs-n">4</div><div class="hs-l">Class Types</div></div>
+      <div><div class="hs-n">∞</div><div class="hs-l">Progress</div></div>
+    </div>
+  </div>
+  <div class="hero-r">
+    <!-- Using Unsplash pilates images that match their B&W aesthetic -->
+    <div class="hp">
+      <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800&q=80" alt="Reformer Pilates">
+    </div>
+    <div class="hero-r-bot">
+      <div class="hp-sm">
+        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80" alt="Pilates class">
+      </div>
+      <div class="hp-label">
+        <div class="big">sondr.</div>
+        <div class="sm">Nairobi · Kenya</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="t-tr">
+    <div class="t-it">Reformer Pilates</div>
+    <div class="t-it">Mat Pilates</div>
+    <div class="t-it">Foundation Four</div>
+    <div class="t-it">Sculpt</div>
+    <div class="t-it">Prenatal Pilates</div>
+    <div class="t-it">Total Body Wellness</div>
+    <div class="t-it">Workshops</div>
+    <div class="t-it">Teacher Training</div>
+    <div class="t-it">Reformer Pilates</div>
+    <div class="t-it">Mat Pilates</div>
+    <div class="t-it">Foundation Four</div>
+    <div class="t-it">Sculpt</div>
+    <div class="t-it">Prenatal Pilates</div>
+    <div class="t-it">Total Body Wellness</div>
+    <div class="t-it">Workshops</div>
+    <div class="t-it">Teacher Training</div>
+  </div>
+</div>
+
+<!-- BRAND STATEMENT -->
+<div class="brand-s rv">
+  <blockquote>
+    A space where athletic precision meets the stillness of a retreat — 
+    Sondr is Nairobi's reformer pilates studio built for those who want to 
+    move better, feel stronger, and train with genuine intention.
+  </blockquote>
+  <cite>— The Sondr Philosophy</cite>
+  <div class="brand-pills">
+    <div class="bp"><div class="bp-ico">✹</div><div class="bp-lbl">Retreat Feeling</div></div>
+    <div class="bp"><div class="bp-ico">☽</div><div class="bp-lbl">Mind & Body</div></div>
+    <div class="bp"><div class="bp-ico">◎</div><div class="bp-lbl">Small Classes</div></div>
+    <div class="bp"><div class="bp-ico">⊹</div><div class="bp-lbl">All Levels</div></div>
+    <div class="bp"><div class="bp-ico">▲</div><div class="bp-lbl">Progressive</div></div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about rv" id="method">
+  <div class="about-img">
+    <img src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=900&q=80" alt="Sondr Studio Nairobi">
+    <div class="about-img-ov"></div>
+    <div class="about-badge">
+      <div class="big">Our Method</div>
+      <div class="sm">Strength with Intention</div>
+    </div>
+  </div>
+  <div class="about-tx">
+    <div class="eye">Who We Are</div>
+    <h2 class="st">Athletic Pilates.<br><em>Retreat Energy.</em></h2>
+    <p class="sb">Sondr Studio is Nairobi's premier athletic reformer pilates studio. We combine the precision and challenge of reformer pilates with a calm, considered environment that makes every class feel like a moment of recovery.</p>
+    <p class="sb">Whether you're new to Pilates or a seasoned practitioner, our small-group classes are intentionally programmed — to build strength, improve posture, enhance movement, and reconnect you with your body.</p>
+    <p class="sb">Founded by <strong style="color:var(--ink);font-weight:500;">Gagan Ubi</strong>, Sondr was built around one belief: that your workout should feel as good as it makes you look.</p>
+    <div class="pillars">
+      <div class="pillar"><h4>Small Class Sizes</h4><p>Maximum attention, minimum distraction</p></div>
+      <div class="pillar"><h4>Reformer & Mat</h4><p>Spring-loaded challenge for every body</p></div>
+      <div class="pillar"><h4>Beginner Friendly</h4><p>Foundation Four gets you started safely</p></div>
+      <div class="pillar"><h4>DM to Book</h4><p>Easy, personal, no faff</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CLASSES -->
+<section class="classes rv" id="classes">
+  <div class="cls-hd">
+    <div>
+      <div class="eye">Our Classes</div>
+      <h2 class="st">Find Your <em>Practice</em></h2>
+    </div>
+    <p class="sb">Every class at Sondr is programmed with purpose. Choose your starting point — we'll take you the rest of the way.</p>
+  </div>
+  <div class="cls-grid">
+    <div class="cls-card">
+      <img class="cls-img" src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&q=80" alt="Reformer Pilates">
+      <div class="cls-inner">
+        <div class="cls-tag">Signature</div>
+        <h3>Reformer Pilates</h3>
+        <p>Full-body, low-impact training on our spring-loaded reformers. Builds strength, flexibility and control with every session.</p>
+        <span class="level">All Levels</span>
+      </div>
+    </div>
+    <div class="cls-card">
+      <img class="cls-img" src="https://images.unsplash.com/photo-1552196563-55cd4e45efb3?w=600&q=80" alt="Mat Pilates">
+      <div class="cls-inner">
+        <div class="cls-tag">Classic</div>
+        <h3>Mat Pilates</h3>
+        <p>The foundation of everything. Mat Pilates builds deep core strength and body awareness — no equipment, just intention.</p>
+        <span class="level">All Levels</span>
+      </div>
+    </div>
+    <div class="cls-card">
+      <img class="cls-img" src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80" alt="Sculpt">
+      <div class="cls-inner">
+        <div class="cls-tag">Advanced</div>
+        <h3>Sculpt</h3>
+        <p>Higher intensity reformer for those ready to challenge their control, coordination and full-body strength. Precision and pace.</p>
+        <span class="level">Prior experience required</span>
+      </div>
+    </div>
+    <div class="cls-card">
+      <img class="cls-img" src="https://images.unsplash.com/photo-1616699002805-0741e1e4a9c5?w=600&q=80" alt="Prenatal Pilates">
+      <div class="cls-inner">
+        <div class="cls-tag">Specialist</div>
+        <h3>Prenatal Pilates</h3>
+        <p>Designed to help expectant mothers feel strong, mobile and connected throughout pregnancy. Fully modified, fully safe.</p>
+        <span class="level">All trimesters</span>
+      </div>
+    </div>
+    <div class="cls-card">
+      <img class="cls-img" src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&q=80" alt="Total Body Wellness">
+      <div class="cls-inner">
+        <div class="cls-tag">Wellness</div>
+        <h3>Total Body Wellness</h3>
+        <p>Pilates as your all-in-one solution. Sculpt lean muscles, improve circulation, and boost overall well-being from head to toe.</p>
+        <span class="level">All Levels</span>
+      </div>
+    </div>
+    <div class="cls-card">
+      <img class="cls-img" src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&q=80" alt="Workshops">
+      <div class="cls-inner">
+        <div class="cls-tag">Events</div>
+        <h3>Workshops & Events</h3>
+        <p>Deepen your practice. Our seasonal workshops take focused deep-dives into specific areas — core connection, breath, alignment.</p>
+        <span class="level">All welcome</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDATION 4 -->
+<section class="foundation rv">
+  <div class="fnd-txt">
+    <div class="eye">New to Pilates?</div>
+    <h2 class="st">Start with <em>Foundation Four</em></h2>
+    <p class="sb" style="color:rgba(232,196,184,.6);">Our beginner programme designed to build your confidence on the reformer across 4 small-group sessions. Learn essential movement patterns, build strength at your own pace, and feel ready for anything.</p>
+    <div class="fnd-steps">
+      <div class="fnd-step">
+        <div class="fnd-n">1</div>
+        <div><h4>Reformer Basics</h4><p>Meet the machine. Learn the springs, straps and how to move safely with control.</p></div>
+      </div>
+      <div class="fnd-step">
+        <div class="fnd-n">2</div>
+        <div><h4>Core Connection</h4><p>Understand your breath, your core and how they power every movement you make.</p></div>
+      </div>
+      <div class="fnd-step">
+        <div class="fnd-n">3</div>
+        <div><h4>Full Body Flow</h4><p>Put it all together. A full-body session building on what you've learned with growing confidence.</p></div>
+      </div>
+      <div class="fnd-step">
+        <div class="fnd-n">4</div>
+        <div><h4>Ready to Move</h4><p>You're now ready for any Sondr class. Your foundation is set. Let's go deeper.</p></div>
+      </div>
+    </div>
+    <div style="margin-top:2.5rem;">
+      <a href="#book" class="btn-burg" style="background:var(--pink);border-color:var(--pink);color:var(--burg-d);">Start Foundation Four</a>
+    </div>
+  </div>
+  <div class="fnd-img">
+    <img src="https://images.unsplash.com/photo-1600618528240-fb9fc964b853?w=800&q=80" alt="Sondr Foundation">
+  </div>
+</section>
+
+<!-- EDITORIAL GRID -->
+<section class="editorial rv">
+  <div class="eye">The Sondr World</div>
+  <h2 class="st">Inside the <em>Studio</em></h2>
+  <div class="ed-grid">
+    <div class="eg eg1">
+      <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800&q=80" alt="Reformer class">
+      <div class="eg-cap"><span>Reformer Class</span></div>
+    </div>
+    <div class="eg eg2">
+      <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=500&q=80" alt="Pilates body">
+      <div class="eg-cap"><span>Sculpt</span></div>
+    </div>
+    <div class="eg eg3">
+      <img src="https://images.unsplash.com/photo-1552196563-55cd4e45efb3?w=500&q=80" alt="Mat pilates">
+      <div class="eg-cap"><span>Mat Pilates</span></div>
+    </div>
+    <div class="eg4">
+      <div class="eg4-txt">
+        <h3>"Be gentle with your mind / body / soul"</h3>
+        <p>The Sondr Community</p>
+      </div>
+    </div>
+    <div class="eg eg5">
+      <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=500&q=80" alt="Wellness">
+      <div class="eg-cap"><span>Total Wellness</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing rv" id="pricing">
+  <div style="text-align:center;max-width:480px;margin:0 auto;">
+    <div class="eye" style="justify-content:center;">Investment</div>
+    <h2 class="st" style="text-align:center;">Choose Your <em>Journey</em></h2>
+  </div>
+  <div class="pricing-grid">
+    <div class="pc rv">
+      <div class="pc-ico">◎</div>
+      <h3>Drop In</h3>
+      <div class="pc-d">Single Session</div>
+      <ul class="pc-ul">
+        <li>One reformer or mat class</li>
+        <li>All levels welcome</li>
+        <li>Book via DM or WhatsApp</li>
+        <li>Grip socks available in studio</li>
+      </ul>
+      <a href="#book" class="pc-cta">Book a Class</a>
+    </div>
+    <div class="pc feat rv">
+      <div class="pc-star">Most Popular</div>
+      <div class="pc-ico">✹</div>
+      <h3>Class Pack</h3>
+      <div class="pc-d">5 or 10 Classes</div>
+      <ul class="pc-ul">
+        <li>Reformer & Mat classes</li>
+        <li>Best value per session</li>
+        <li>Flexible booking</li>
+        <li>Priority spot reservation</li>
+        <li>Valid for 3 months</li>
+      </ul>
+      <a href="#book" class="pc-cta">Get a Pack</a>
+    </div>
+    <div class="pc rv">
+      <div class="pc-ico">☽</div>
+      <h3>Foundation Four</h3>
+      <div class="pc-d">Beginner Programme</div>
+      <ul class="pc-ul">
+        <li>4 small-group sessions</li>
+        <li>Progressive curriculum</li>
+        <li>Hands-on instruction</li>
+        <li>Builds reformer confidence</li>
+      </ul>
+      <a href="#book" class="pc-cta">Start Here</a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials rv">
+  <div class="eye">The Community</div>
+  <h2 class="st st--w">They <em>Keep Coming Back</em></h2>
+  <div class="t-grid">
+    <div class="tc">
+      <div class="tc-stars">★★★★★</div>
+      <div class="tc-q">"</div>
+      <p class="tc-txt">Sondr has completely changed the way I think about exercise. It doesn't feel like a workout — it feels like therapy. I leave every single class feeling better than when I walked in.</p>
+      <div class="tc-au"><div class="tc-av">AM</div><div><div class="tc-nm">Amira M.</div><div class="tc-lc">Nairobi</div></div></div>
+    </div>
+    <div class="tc">
+      <div class="tc-stars">★★★★★</div>
+      <div class="tc-q">"</div>
+      <p class="tc-txt">I started with Foundation Four as an absolute beginner. Six months later I'm doing Sculpt three times a week. The progression at Sondr is real. Gagan and the team are exceptional.</p>
+      <div class="tc-au"><div class="tc-av">PK</div><div><div class="tc-nm">Priya K.</div><div class="tc-lc">Nairobi</div></div></div>
+    </div>
+    <div class="tc">
+      <div class="tc-stars">★★★★★</div>
+      <div class="tc-q">"</div>
+      <p class="tc-txt">The studio is beautiful, the energy is calm, and the classes are challenging in the best way. It really is not just another class. There is nothing like Sondr in Nairobi.</p>
+      <div class="tc-au"><div class="tc-av">WN</div><div><div class="tc-nm">Wanja N.</div><div class="tc-lc">Nairobi</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta rv" id="book">
+  <div class="eye">Begin</div>
+  <h2>Ready to <em>Move?</em></h2>
+  <p>DM us on Instagram or WhatsApp to book your class. First time? Start with Foundation Four — we'll take care of everything else.</p>
+  <div class="cta-row">
+    <a href="https://instagram.com/sondr_studio" target="_blank" class="btn-burg">DM on Instagram</a>
+    <a href="https://wa.me/254700000000" class="btn-burg" style="background:transparent;color:var(--burg);border-color:var(--burg);">💬 WhatsApp</a>
+    <a href="#classes" class="btn-out">See All Classes →</a>
+  </div>
+  <div class="cta-info">
+    <div class="ci"><div class="ci-ico">📍</div><div class="ci-lbl">Location</div><div class="ci-val">Nairobi, Kenya<br>DM for exact address</div></div>
+    <div class="ci"><div class="ci-ico">📸</div><div class="ci-lbl">Instagram</div><div class="ci-val">@sondr_studio</div></div>
+    <div class="ci"><div class="ci-ico">👥</div><div class="ci-lbl">Community</div><div class="ci-val">12K Followers</div></div>
+    <div class="ci"><div class="ci-ico">✹</div><div class="ci-lbl">Classes</div><div class="ci-val">Reformer · Mat · Sculpt<br>Prenatal · Workshops</div></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-grid">
+    <div>
+      <div class="ft-logo">sondr.</div>
+      <p class="ft-p">Athletic Reformer Pilates Studio. Combining Pilates with a sense of retreat. Nairobi, Kenya.</p>
+      <div class="ft-soc">
+        <a href="https://instagram.com/sondr_studio" target="_blank" class="ft-sc">IG</a>
+        <a href="https://tiktok.com/@karim.salonandspa" target="_blank" class="ft-sc">TK</a>
+        <a href="#" class="ft-sc">FB</a>
+      </div>
+    </div>
+    <div class="ft-col"><h4>Classes</h4><ul><li>Reformer Pilates</li><li>Mat Pilates</li><li>Sculpt</li><li>Prenatal</li><li>Workshops</li></ul></div>
+    <div class="ft-col"><h4>Studio</h4><ul><li>Our Method</li><li>Foundation Four</li><li>Teacher Training</li><li>Community</li></ul></div>
+    <div class="ft-col"><h4>Book</h4><ul><li>DM on Instagram</li><li>WhatsApp Us</li><li>Drop In</li><li>Class Packs</li></ul></div>
+  </div>
+  <div class="ft-bot">
+    <p>© 2025 Sondr Studio · Website design proposal by <a href="mailto:josiegacau@gmail.com" style="color:rgba(232,196,184,.25);border-bottom:1px solid rgba(232,196,184,.12);">Josie Gacau</a> · +254 745 882 043</p>
+    <div class="ft-bot-r">Athletic Reformer Pilates · Nairobi</div>
+  </div>
+</footer>
+
+<script>
+// Watermark
+const wm=document.getElementById('wm');
+const t=document.createElement('div');t.className='wm-t';
+for(let r=0;r<22;r++){
+  const row=document.createElement('div');row.className='wm-r';
+  for(let c=0;c<14;c++){
+    const s=document.createElement('span');
+    s.textContent=c%2===0?'SONDR STUDIO NAIROBI':'✹ Design Proposal ✹';
+    row.appendChild(s);
+  }
+  t.appendChild(row);
+}
+wm.appendChild(t);
+
+// Scroll reveal with stagger
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('sh');io.unobserve(e.target);}});
+},{threshold:.06});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+['.pricing-grid','.t-grid','.pillars','.brand-pills'].forEach(s=>{
+  const g=document.querySelector(s);
+  if(g)[...g.children].forEach((c,i)=>c.style.transitionDelay=i*.09+'s');
+});
+</script>
+</body>
+</html>
